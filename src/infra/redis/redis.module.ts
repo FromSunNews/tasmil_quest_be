@@ -8,19 +8,21 @@ import { RedisService } from './redis.service';
   imports: [
     NestRedisModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (...args: unknown[]): RedisModuleOptions => {
-        const [configService] = args as [ConfigService];
+      useFactory: (configService: ConfigService): RedisModuleOptions => {
+        const redisConfig = configService.get<any>('redis');
         const config: any = {
-          host: configService.get<string>('redis.host'),
-          port: configService.get<number>('redis.port'),
-          password: configService.get<string>('redis.password') || undefined,
-          db: configService.get<number>('redis.db') || 0,
+          host: redisConfig?.host || process.env.REDIS_HOST || 'localhost',
+          port: redisConfig?.port || parseInt(process.env.REDIS_PORT || '6379', 10),
+          password: redisConfig?.password || process.env.REDIS_PASSWORD || undefined,
+          db: redisConfig?.db || 0,
           retryStrategy: (times: number) => Math.min(times * 50, 2000),
         };
 
-        if (configService.get<string>('redis.tls')) {
+        if (redisConfig?.tls || process.env.REDIS_TLS === 'true') {
           config.tls = {};
         }
+
+        console.log('[RedisModule] Connecting to:', { host: config.host, port: config.port, tls: !!config.tls });
 
         return { config };
       },
