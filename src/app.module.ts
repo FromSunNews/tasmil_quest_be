@@ -35,6 +35,7 @@ process.env.MOCK_REDIS === 'true' ? MockRedisModule : RedisModule;
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: './.env',
       load: [appConfig, databaseConfig, redisConfig, authConfig],
     }),
     CacheModule.registerAsync({
