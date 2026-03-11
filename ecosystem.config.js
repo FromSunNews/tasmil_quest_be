@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   apps: [
     {
@@ -12,6 +14,16 @@ module.exports = {
       env_production: {
         NODE_ENV: 'production',
         PORT: 5555,
+        REDIS_HOST: process.env.REDIS_HOST || 'localhost',
+        REDIS_PORT: process.env.REDIS_PORT || '6379',
+        REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+        REDIS_TLS: process.env.REDIS_TLS || 'true',
+        DB_HOST: process.env.DB_HOST || 'localhost',
+        DB_PORT: process.env.DB_PORT || '5432',
+        DB_NAME: process.env.DB_NAME || 'postgres',
+        DB_USERNAME: process.env.DB_USERNAME || 'postgres',
+        DB_PASSWORD: process.env.DB_PASSWORD,
+        DB_SSL: process.env.DB_SSL || 'true',
       },
       instances: 1,
       exec_mode: 'fork',
