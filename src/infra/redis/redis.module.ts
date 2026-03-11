@@ -8,7 +8,8 @@ import { RedisService } from './redis.service';
   imports: [
     NestRedisModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService): RedisModuleOptions => {
+      useFactory: (...args: unknown[]): RedisModuleOptions => {
+        const configService = args[0] as ConfigService;
         const redisConfig = configService.get<any>('redis');
         const config: any = {
           host: redisConfig?.host || process.env.REDIS_HOST || 'localhost',
