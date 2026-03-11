@@ -64,7 +64,7 @@ process.env.MOCK_REDIS === 'true' ? MockRedisModule : RedisModule;
             },
             password: redisPassword,
             ttl: redisConfig?.ttl || 60,
-            retryStrategy: (times: number) => Math.min(times * 50, 2000), // retry
+            retryStrategy: () => null, // disable retry
           } as any),
         };
       },
