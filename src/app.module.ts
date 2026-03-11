@@ -48,14 +48,22 @@ process.env.MOCK_REDIS === 'true' ? MockRedisModule : RedisModule;
             ttl: 0,
           };
         }
+        const redisConfig = configService.get<any>('redis');
+        const redisHost = redisConfig?.host || process.env.REDIS_HOST || 'localhost';
+        const redisPort = redisConfig?.port || parseInt(process.env.REDIS_PORT || '6379', 10);
+        const redisPassword = redisConfig?.password || process.env.REDIS_PASSWORD;
+
+        console.log('[CacheModule] Connecting to Redis:', { host: redisHost, port: redisPort, tls: redisConfig?.tls ? true : false });
+
         return {
           store: await redisStore({
             socket: {
-              host: configService.get<string>('redis.host'),
-              port: configService.get<number>('redis.port'),
+              host: redisHost,
+              port: redisPort,
+              tls: redisConfig?.tls ? true : (process.env.REDIS_TLS === 'true' ? {} : undefined),
             },
-            password: configService.get<string>('redis.password'),
-            ttl: configService.get<number>('redis.ttl', 60),
+            password: redisPassword,
+            ttl: redisConfig?.ttl || 60,
             retryStrategy: (times: number) => Math.min(times * 50, 2000), // retry
           } as any),
         };
