@@ -1,0 +1,63 @@
+[
+    {
+      "name": "Follow Tasmil on X (Twitter)",
+      "title": "Follow Tasmil on X (Twitter)",
+      "description": "Follow the official **[Tasmil X account](https://x.com/tasmilfinance)** to stay updated with our latest **DeFi innovations**, product launches, and community updates.\n\n👉 [Click here to follow now](https://x.com/intent/follow?screen_name=tasmilfinance)",
+      "urlAction": "https://x.com/intent/follow?screen_name=tasmilfinance",
+      "rewardPoints": 20,
+      "taskType": "X_Follow",
+      "checkId": "tasmilfinance",
+      "taskOrder": 0
+    },
+    {
+      "name": "Retweet Tasmil’s Pinned Post",
+      "title": "Retweet Tasmil’s Pinned Post",
+      "description": "Retweet the pinned post from **[Tasmil’s official X account](https://x.com/tasmilfinance)** using the hashtags **#Tasmil #DeFi #Web3** to spread awareness about the project.\n\n👉 [Click here to retweet](https://x.com/intent/retweet?tweet_id=pinned_post_id)",
+      "urlAction": "https://x.com/intent/retweet?tweet_id=1978001753187688466",
+      "rewardPoints": 25,
+      "taskType": "X_Retweet",
+      "checkId": "1978001753187688466",
+      "taskOrder": 1
+    },
+    {
+      "name": "Comment on Tasmil’s Tweet: 'The Structure Behind Tasmil Finance'",
+      "title": "Comment on Tasmil’s Tweet: 'The Structure Behind Tasmil Finance'",
+      "description": "Leave a meaningful comment on **[Tasmil’s latest tweet](https://x.com/tasmilfinance)**, tag **2 friends**, and share your thoughts about the **future of AI-powered DeFi**.\n\n👉 [Click here to comment](https://x.com/intent/tweet?in_reply_to=latest_tweet_id&text=Excited%20about%20Tasmil!%20%40friend1%20%40friend2)",
+      "urlAction": "https://x.com/intent/tweet?in_reply_to=1981754207800832019&text=Excited%20about%20Tasmil!%20%40friend1%20%40friend2",
+      "rewardPoints": 25,
+      "taskType": "X_Comment",
+      "checkId": "1981754207800832019",
+      "taskOrder": 2
+    },
+    {
+      "name": "Join the Tasmil Discord Server",
+      "title": "Join the Tasmil Discord Server",
+      "description": "Join our **[official Discord community](https://discord.gg/RWYAx6Sv)** and verify your account to access **exclusive channels**, **community events**, and **project discussions**.\n\n👉 [Join Discord](https://discord.gg/RWYAx6Sv)",
+      "urlAction": "https://discord.gg/RWYAx6Sv",
+      "rewardPoints": 15,
+      "taskType": "Discord",
+      "checkId": "RWYAx6Sv",
+      "taskOrder": 3
+    },
+    {
+      "name": "Join the Tasmil Telegram Channel",
+      "title": "Join the Tasmil Telegram Channel",
+      "description": "Join our **[Telegram community](https://t.me/+bjPjw-8mb7FkZmRl)** to receive instant updates, announcements, and chat with other **Web3 enthusiasts** in real-time.\n\n👉 [Join Telegram](https://t.me/+bjPjw-8mb7FkZmRl)",
+      "urlAction": "https://t.me/+bjPjw-8mb7FkZmRl",
+      "rewardPoints": 15,
+      "taskType": "Telegram",
+      "checkId": "bjPjw-8mb7FkZmRl",
+      "taskOrder": 4
+    },
+    {
+      "name": "Visit the Tasmil Website",
+      "title": "Visit the Tasmil Website",
+      "description": "Explore **[Tasmil Finance](https://tasmil-finance.xyz)** — an AI-powered DeFi ecosystem that optimizes trading, yield farming, and portfolio management.\n\n👉 [Visit Website](https://tasmil-finance.xyz)",
+      "urlAction": "https://tasmil-finance.xyz",
+      "rewardPoints": 10,
+      "taskType": "Visit",
+      "checkId": "tasmil-finance.xyz",
+      "taskOrder": 5
+    }
+  ]
+  

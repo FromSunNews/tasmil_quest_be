@@ -1,0 +1,24 @@
+FROM node:20-alpine
+
+# Install Python and build tools for native dependencies
+RUN apk add --no-cache python3 make g++ git
+
+WORKDIR /usr/src/app
+
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+COPY nest-cli.json ./
+
+# Install ALL dependencies (including devDependencies for development)
+RUN npm ci
+
+# Copy source code
+COPY src ./src
+COPY . .
+
+# Expose port
+EXPOSE 5555
+
+# Start in development mode
+CMD ["npm", "run", "start:docker"]

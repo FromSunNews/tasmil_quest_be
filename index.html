@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web3 Login Full Flow</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.min.js"></script>
+  <style>
+    button { margin: 5px; padding: 10px 20px; }
+    pre { background: #f5f5f5; padding: 10px; border-radius: 5px; max-width: 700px; }
+  </style>
+</head>
+<body>
+  <h1>🌐 Tasmil Finance - Web3 Login Test</h1>
+  <p style="color: #666; margin-bottom: 20px;">
+    Test the complete Web3 authentication flow with improved UX
+  </p>
+  <button id="connectWallet">1. Connect Wallet</button>
+  <button id="loginWallet">2. Sign Message & Login</button>
+  <button id="copyPayload">3. Copy Payload</button>
+
+  <p id="status"></p>
+  <pre id="result"></pre>
+
+  <script>
+    let walletAddress = null;
+    let nonce = null;
+    let lastPayload = null;
+
+    const statusEl = document.getElementById('status');
+    const resultEl = document.getElementById('result');
+    const copyBtn = document.getElementById('copyPayload');
+
+    document.getElementById('connectWallet').onclick = async () => {
+      if (!window.ethereum) {
+        statusEl.textContent = "MetaMask not installed!";
+        return;
+      }
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        walletAddress = accounts[0];
+        statusEl.textContent = `Connected: ${walletAddress}`;
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "Connection failed";
+      }
+    };
+
+    document.getElementById('loginWallet').onclick = async () => {
+      if (!walletAddress) {
+        statusEl.textContent = "Connect wallet first!";
+        return;
+      }
+
+      try {
+        statusEl.textContent = "Fetching authentication request...";
+        
+        // Step 1: Get nonce and message from backend
+        const nonceRes = await fetch(`http://localhost:5555/api/auth/wallet/nonce?walletAddress=${walletAddress}`);
+        const json = await nonceRes.json();
+        if (!json.success || !json.data?.nonce) {
+          statusEl.textContent = "Nonce not received from backend";
+          console.error('Nonce response:', json);
+          return;
+        }
+        
+        nonce = json.data.nonce;
+        // Use message from backend if available, otherwise fallback to old format
+        const message = json.data.message || `Tasmil Login Nonce: ${nonce}`;
+        
+        statusEl.textContent = `Nonce received. Please sign the message in your wallet...`;
+        resultEl.textContent = `Message to sign:\n\n${message}`;
+
+        // Step 2: Sign the message
+        const signature = await window.ethereum.request({
+          method: 'personal_sign',
+          params: [message, walletAddress],
+        });
+
+        lastPayload = {
+          walletAddress,
+          signature
+        };
+
+        resultEl.textContent = `Message signed successfully!\n\nPayload for API:\n${JSON.stringify(lastPayload, null, 2)}`;
+        statusEl.textContent = "✅ Wallet signed. Copy payload to Swagger/Postman or press 'Copy Payload'.";
+
+      } catch (err) {
+        console.error(err);
+        if (err.message && (err.message.includes("User rejected") || err.message.includes("user rejected") || err.message.includes("User denied"))) {
+          statusEl.textContent = "❌ Signature rejected. Please try again.";
+        } else {
+          statusEl.textContent = `❌ Login failed: ${err.message || 'Unknown error'}`;
+        }
+        resultEl.textContent = `Error: ${JSON.stringify(err, null, 2)}`;
+      }
+    };
+
+    copyBtn.onclick = () => {
+      if (!lastPayload) {
+        statusEl.textContent = "No payload to copy!";
+        return;
+      }
+      navigator.clipboard.writeText(JSON.stringify(lastPayload, null, 2))
+        .then(() => {
+          statusEl.textContent = "Payload copied to clipboard!";
+        })
+        .catch(err => {
+          console.error(err);
+          statusEl.textContent = "Copy failed";
+        });
+    };
+  </script>
+</body>
+</html>
