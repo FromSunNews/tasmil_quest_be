@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -35,7 +36,7 @@ process.env.MOCK_REDIS === 'true' ? MockRedisModule : RedisModule;
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: './.env',
+      envFilePath: join(__dirname, '..', '.env'),
       load: [appConfig, databaseConfig, redisConfig, authConfig],
     }),
     CacheModule.registerAsync({
